@@ -15,30 +15,29 @@ pragma solidity >= 0.4.0 <0.9.0;
 // reentrance guard
 // }
 
+contract SetOwner {
 
-contract funcModifier {
+    address public owner;
 
 
-    address public owner
-
-    constructor () {
+    constructor() {
         owner == msg.sender;
-        // addresse that deploys contract is owner/create the contract transaction 
 
-        
+    }
+
+    modifier OnlyOwner() {
+        require(owner == msg.sender)
+        _;
+    }
+
+    modifier validateAddresse(address _addr)  {
+        require(_addr != address(0), "Address is Invalid");
+        _;
+    }
+
+
+    function changeOwner(address _newOwner) public OnlyOwner validateAddresse {
+        owner == _newOwner;
     }
     
-    modifier onlyOwner() {
-        require(owner == msg.sender);
-        _;
-    }
-
-    modifier validateAddress(uint _addr)  {
-        require(_addr != addresse(0), "not valid addresse");
-        _;
-    }
-
-    function changeOwner(address _newowner) public onlyOwner validateAddress {
-        owner = _newowner;
-    }
 }
